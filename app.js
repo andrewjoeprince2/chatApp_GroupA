@@ -24,6 +24,10 @@ io.on('connection', socket => {   // function(socket) {...}
 
   io.emit('chat message', { for : 'everyone', message : `${socket.id} is here!`}); //default message when someone joins
 
+  //handle messages sent from the client
+  socket.on('chat message', msg => {
+    io.emit('chat message', { for : 'everyone', message : msg});
+  });
 
   socket.on('disconnect', () => {
     console.log('a user has disconnected');
