@@ -12,7 +12,7 @@ Please install ruby, if not already installed;
 *	Use `$ which ruby` or `$ ruby --version`, to verify if ruby is installed;
 *	Make sure bundler is installed by running `$ gem install bundler`.
 
-Please clone the repository from BitBucket:
+Please clone the repository from GitHub:
 ```
 $ git clone https://github.com/andrewjoeprince2/chatApp_GroupA.git
 ```
@@ -54,7 +54,7 @@ The route can be accessed through the url:
 1)	Submit a ticket for your issue, assuming one does not already exist;
 2)	Clearly describe the issue including steps to reproduce when it is a bug;
 3)	Make sure you fill in the earliest version that you know has the issue;
-4)	Fork the repository on BitBucket.
+4)	Fork the repository on GitHub.
 
 #### Making Changes:
 
