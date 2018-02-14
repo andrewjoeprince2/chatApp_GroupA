@@ -36,6 +36,10 @@ Once all dependancies have been installed (node_modules), run the server with th
 
 The server will then give a message in the terminal window, listening on port 3000. 
 
+The route can be accessed through the url:
+
+`localhost:3000`
+
 
 ## Authors
 
