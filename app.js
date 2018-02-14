@@ -1,6 +1,8 @@
 const express = require('express'); // same as PHP
 const app = express();
 const io = require('socket.io')(); //activate the chat plugin
+//Nicknames Array
+var nicknames = [];
 
 
 //serve up static files
@@ -13,6 +15,8 @@ app.use(require('./routes/index'));
 //app.use(require('./routes/portfolio'));
 
 
+
+
 const server = app.listen(3000, () => {
     console.log('listening on port 3000');
 });
@@ -20,14 +24,19 @@ const server = app.listen(3000, () => {
 io.attach(server);
 
 
-var userCount = 0;
 
 io.on('connection', function(socket) {
 
   //Client joins
   socket.on('join notification', function(data){
    io.emit('join notification', data);
+   socket.username = data.handle;
+   socket.userColor = data.userColor;
+   nicknames.push(socket.username);
+   io.emit('usersList', nicknames);
   });
+
+
 
   //Message Sending
   socket.on('chat message', function(data){
@@ -46,12 +55,12 @@ io.on('connection', function(socket) {
   //handle messages sent from the client
   socket.on('chat message', function(msg) {
     io.emit('chat message', { for : 'everyone', message : msg});
-  });
+  });*/
 
   socket.on('disconnect', function() {
     //console.log('a user has disconnected');
-    userCount--;
-    console.log(userCount);
-    io.emit('disconnect message', `${socket.id} has disconnected.`);
-  });*/
+    nicknames.splice(nicknames.indexOf(socket.username), 1);
+    io.emit('usersList', nicknames);
+    io.emit('disconnect message', `<span style="color:${socket.userColor}">${socket.username}</span>`);
+  });
 });

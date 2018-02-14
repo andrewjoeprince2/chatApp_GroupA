@@ -3,27 +3,34 @@
 
   let messageList = document.querySelector('#messages'),
   chatForm = document.querySelector('form'),
-  chatInput = document.querySelector('#m');
+  chatInput = document.querySelector('#m'),
   nameInput = document.querySelector('.nickname'),
   chatMessage = chatForm.querySelector('.message'),
 
-  colorInput = document.querySelectorAll('.userColor');
-  handle = document.querySelector('.handle');
+  colorInput = document.querySelectorAll('.userColor'),
+  handle = document.querySelector('.handle'),
 
-  buttonGo = document.querySelector('#buttonGo');
+  buttonGo = document.querySelector('#buttonGo'),
   overlay = document.querySelector('#nicknameOverlay'),
 
   //typingFeed
-  typingFeedCon = document.querySelector('#typingFeed');
+  typingFeedCon = document.querySelector('#typingFeed'),
 
   //user list
-  usersList = document.querySelector("#users");
+  usersDiv = document.querySelector('#onlineUsers'),
+  usersHeader = usersDiv.querySelector('h2');
+  usersList = document.querySelector("#users"),
 
   nickName = null,
   userColor = "#1e1e1e";
 
+
+//Random greetings
   var greetings = ["just rolled in! Let them know you're here too!", "has arrived!", "has joined! Say hi!", "has graced us with their presence.", "joined the party! Welcome!", "has stumbled across this chatroom!"];
   var randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+
+  var goodbye = ["has left the building!", "disconnected.", "has mysteriously vanished!", "blasted off!", "is no more.", "peaced out!"];
+  var randomGoodbye = goodbye[Math.floor(Math.random() * goodbye.length)];
 
   function setColor() {
     for(i=0;i<colorInput.length;i++) {
@@ -48,22 +55,19 @@
       userColor: userColor
     });
 
-  //  joinMsg = `<span style="color:${userColor}">${nickName}</span> ${randomGreeting}`;
-    //socket.emit('chat message', joinMsg);
-    //console.log(userColor);
   }
 
 
 
   function userJoin(data) {
-    messageList.innerHTML += `<li><span style="color:${data.userColor}">${data.handle}</span> ${randomGreeting}</li>` //I suppose I could have sent this to the server but I like how each client recieves a different random greeting
+    messageList.innerHTML += `<li><span style="color:${data.userColor}">${data.handle}</span> ${randomGreeting}</li>`;
     var connectedAudio = new Audio('../audio/connected.mp3'); //I created these audio files myself
     connectedAudio.play();
   }
 
   function userList(data) {
-    usersList.innerHTML += `<li><span style="color:${data.userColor}">&#64;</span>${data.handle}</li>`;
-    console.log(data.handle);
+    //usersList.innerHTML += `<li><span style="color:${data.userColor}">&#64;</span>${data.handle}</li>`;
+    //console.log(data.handle);
   }
 
 
@@ -83,7 +87,8 @@
       messageList.innerHTML += `<li><span class="handle" style="color:${data.userColor}">${data.handle}</span> <span class="date">${data.timestamp}</span> <p class="messageContent">${data.message}</p></li>`;
       var messageAudio = new Audio('../audio/message.mp3'); //I created these audio files myself
       messageAudio.play();
-      window.scrollTo(0, document.body.scrollHeight);
+  //    window.scrollTo(0,document.querySelector("#testJump").scrollHeight);
+
   }
 
   function typingFeed() {
@@ -97,38 +102,28 @@
     typingFeedCon.innerHTML = `<li><span style="color:${data.userColor}">${data.handle}</span> is typing...</li>`;
   }
 
-/*
-  function handleSendMessage(e) {
-    e.preventDefault(); //block default behaviour (page refresh)
-    //debugger;
-    nickName = (nickName && nickName.length > 0) ? nickName : 'user';
-    msg = `<span class="handle" style="color:${userColor}">${nickName}</span>  ${chatMessage.value}`;
 
-    socket.emit('chat message', msg);
-    chatMessage.value = "";
-    return false;
-  }
-
-  function appendMessage(msg) {
-    //debugger;
-    let newMsg = `<li><p class="messageContent">${msg.message}</p></li>`;
-    messageList.innerHTML += newMsg;
-    var messageAudio = new Audio('../audio/message.mp3'); //I created these audio files myself
-    messageAudio.play();
-     window.scrollTo(0, document.body.scrollHeight);
-  }
-
-  function appendDiscMessage(msg) {
+  function appendDiscMessage(data) {
     //debugger;
 
-    let newMsg = `<li>${msg}</li>`;
+    let newMsg = `<li>${data} ${randomGoodbye}</li>`;
     messageList.innerHTML += newMsg;
     var disconnectAudio = new Audio('../audio/disconnected.mp3');
     disconnectAudio.play();
   }
 
+  function logUsers(data) {
+    usersList.innerHTML = " ";
+    //console.log(data);
+    console.log(data.userColor);
+    usersHeader.innerHTML = `<span class="numUsers">${data.length}</span> Online Users`;
+    for(i=0;i<data.length;i++) {
+    usersList.innerHTML += `<li><span>${data[i]}</span></li>`;
+  }
+  }
 
-*/
+
+
 //  nameInput.addEventListener('change', setNickname, false);
   chatInput.addEventListener('keypress', typingFeed, false);
   chatForm.addEventListener('submit', handleSendMessage, false);
@@ -136,7 +131,9 @@
   socket.addEventListener('typing', typingFeedOutput, false);
   socket.addEventListener('join notification', userJoin, false);
   socket.addEventListener('join notification', userList, false);
-  //socket.addEventListener('disconnect message', appendDiscMessage, false);
+  socket.addEventListener('disconnect message', appendDiscMessage, false);
+  socket.addEventListener('usersList', logUsers, false);
+//  socket.addEventListener('disconnect message', logDisc, false);
 
   for(i=0;i<colorInput.length;i++) {
   colorInput[i].addEventListener('click', setColor, false);
