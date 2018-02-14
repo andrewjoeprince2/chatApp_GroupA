@@ -1,3 +1,10 @@
+/*
+  Feature additions include:
+  -User colors
+  -User list
+  -Message broadcasted when other users are typing
+*/
+
 (() => {
   const socket = io();
 
@@ -41,11 +48,6 @@
     this.style.border = "solid 8px red";
     }
 
-/*
-  function setNickname() {
-    //debugger;
-    nickName = this.value;
-  }*/
 
   function closeOverlay() {
     overlay.style.display = "none";
@@ -62,13 +64,11 @@
   function userJoin(data) {
     messageList.innerHTML += `<li><span style="color:${data.userColor}">${data.handle}</span> ${randomGreeting}</li>`;
     var connectedAudio = new Audio('../audio/connected.mp3'); //I created these audio files myself
+    messageList.scrollTop = messageList.scrollHeight - messageList.clientHeight;
+    document.body.scrollTop = document.body.scrollHeight;
     connectedAudio.play();
   }
 
-  function userList(data) {
-    //usersList.innerHTML += `<li><span style="color:${data.userColor}">&#64;</span>${data.handle}</li>`;
-    //console.log(data.handle);
-  }
 
 
   function handleSendMessage(e) {
@@ -87,7 +87,8 @@
       messageList.innerHTML += `<li><span class="handle" style="color:${data.userColor}">${data.handle}</span> <span class="date">${data.timestamp}</span> <p class="messageContent">${data.message}</p></li>`;
       var messageAudio = new Audio('../audio/message.mp3'); //I created these audio files myself
       messageAudio.play();
-  //    window.scrollTo(0,document.querySelector("#testJump").scrollHeight);
+      messageList.scrollTop = messageList.scrollHeight - messageList.clientHeight;
+      document.body.scrollTop = document.body.scrollHeight;
 
   }
 
@@ -109,6 +110,8 @@
     let newMsg = `<li>${data} ${randomGoodbye}</li>`;
     messageList.innerHTML += newMsg;
     var disconnectAudio = new Audio('../audio/disconnected.mp3');
+    messageList.scrollTop = messageList.scrollHeight - messageList.clientHeight;
+    document.body.scrollTop = document.body.scrollHeight;
     disconnectAudio.play();
   }
 
@@ -130,7 +133,6 @@
   socket.addEventListener('chat message', appendMessage, false);
   socket.addEventListener('typing', typingFeedOutput, false);
   socket.addEventListener('join notification', userJoin, false);
-  socket.addEventListener('join notification', userList, false);
   socket.addEventListener('disconnect message', appendDiscMessage, false);
   socket.addEventListener('usersList', logUsers, false);
 //  socket.addEventListener('disconnect message', logDisc, false);
