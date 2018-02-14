@@ -13,31 +13,10 @@ $blue2 : #6b9bcb;
 body {
 	font-family: 'Roboto', sans-serif;
 	font-size: 16px;
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
 
-/*body { font: 13px Helvetica, Arial;}
-
-form {
-	background: #000;
-	padding: 3px;
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-
-	input { border: 0; padding: 10px; width: 90%; margin-right: 0; }
-
-	button { width: 9%; background: rgb(130, 224,255); border: none; padding: 10px; }
-}
-
-#messages {
-	list-style-type: none; margin: 0; padding: 0;
-
-	li { padding: 5px 10px;	}
-	li:nth-child(odd) { background: #eee; }
-}
-*/
 
 #nicknameOverlay {
 	background-color: $gray1;
@@ -187,8 +166,6 @@ width: 70%;
 }
 
 
-
-
 #chatHeader {
 	background-color: white;
 	color: $gray3;
@@ -279,11 +256,28 @@ width: 70%;
 	margin: 0;
 }
 
+#typingFeed {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		margin-bottom: 55px;
+
+		li {
+			padding: 5px;
+			padding-left: 20px;
+		}
+		li:nth-child(odd) {
+			background: #f1f1f1;
+		}
+	}
+
+
 #messages {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
-	margin-bottom: 55px;
+	height: 80%;
+	overflow-y: scroll;
 
 	li {
 		padding: 5px;
@@ -300,6 +294,12 @@ width: 70%;
 	font-weight: 700;
 }
 
+.date {
+	color: #c4c4c4;
+	display: block;
+	font-size: 13px;
+}
+
 .numUsers {
 	color: lighten(#6b9bcb, 20%);
 }
@@ -310,10 +310,11 @@ width: 70%;
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-	padding-left: 25px;
-	padding-top: 20px;
-	padding-bottom: 0px;
+	padding: 25px;
+	padding-bottom: 0;
+	margin-bottom: 0;
 	margin-top: 20px;
+	border-top: solid 1px $blue2;
 
 	form {
 		display: inline;
@@ -321,7 +322,7 @@ width: 70%;
 	}
 
 	input {
-		width: 60%;
+		width: 100%;
 		background-color: #eee;
 		border: solid 1px $gray4;
 		box-shadow: none;
