@@ -9,8 +9,8 @@ app.use(express.static('public'));
 //add routes
 
 app.use(require('./routes/index'));
-app.use(require('./routes/contact'));
-app.use(require('./routes/portfolio'));
+//app.use(require('./routes/contact'));
+//app.use(require('./routes/portfolio'));
 
 
 const server = app.listen(3000, () => {
@@ -19,19 +19,25 @@ const server = app.listen(3000, () => {
 
 io.attach(server);
 
-io.on('connection', socket => {   // function(socket) {...}
-  console.log('a user has connected');
 
-  io.emit('chat message', { for : 'everyone', message : `${socket.id} is here!`}); //default message when someone joins
+var userCount = 0;
+
+io.on('connection', function(socket) {
+  //console.log('${socket.id} a user has connected');
+
+  //io.emit('chat message', { for : 'everyone', message : `${socket.id} has joined!`}); //default message when someone joins
+  userCount++;
+  console.log(userCount);
 
   //handle messages sent from the client
-  socket.on('chat message', msg => {
+  socket.on('chat message', function(msg) {
     io.emit('chat message', { for : 'everyone', message : msg});
   });
 
-  socket.on('disconnect', () => {
-    console.log('a user has disconnected');
-
-    io.emit('disconnect message', `${socket.id} has left the building!`);
+  socket.on('disconnect', function() {
+    //console.log('a user has disconnected');
+    userCount--;
+    console.log(userCount);
+    io.emit('disconnect message', `${socket.id} has disconnected.`);
   });
 });

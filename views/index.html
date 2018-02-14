@@ -1,18 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Socket IO Chat with Node!</title>
+	<link rel="stylesheet" href="css/foundation.css">
 	<link rel="stylesheet" href="css/main.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 </head>
 <body>
-	<input type="text" class="nickname" placeholder="What is your nickname?">
-	<ul id="messages"></ul>
-	<form>
-		<input class="message" type="text" id="m" autocomplete="off">
-		<button>send</button>
-	</form>
-  <script src="/socket.io/socket.io.js"></script>
+
+
+<!--Nickname overlay-->
+<div id="nicknameOverlay">
+	<div class="grid-container">
+
+		<div class="grid-x">
+			<div class="cell small-12" id="nicknameContent">
+				<h2>Welcome to <span class="logo">Chat</span></h2>
+				<p>Please enter your nickname below to join the conversation!</p>
+			<input type="text" class="nickname" placeholder="What is your nickname?" maxlength="20">
+			</div>
+		</div>
+
+		<div class="grid-x">
+			<div class="cell small-12" id="colorSelect">
+				<p>Pick your favourite colour!</p>
+
+				<div class="grid-x grid-padding-x small-up-2 medium-up-4 large-up-6">
+			  <div class="cell userColor" data-color="fa3c4c" id="ucRed"></div>
+			  <div class="cell userColor" data-color="0084ff" id="ucBlue"></div>
+			  <div class="cell userColor" data-color="13cf13" id="ucGreen"></div>
+			  <div class="cell userColor" data-color="be8765" id="ucBrown"></div>
+			  <div class="cell userColor" data-color="7646ff" id="ucPurple"></div>
+			  <div class="cell userColor" data-color="ff7e29" id="ucOrange"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="grid-x">
+		<div class="cell small-12" id="nicknameSubmit">
+				<button id="buttonGo">Let's go!</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+<!--End of overlay-->
+
+<!--Start of chat body-->
+
+    <!--  <div class="cell" id="chatHeader">
+        <h2><span class="hash">&#35;</span> chatroom-1</h2>
+      </div>-->
+
+      <div class="cell medium-auto medium-cell-block-container">
+
+			  <div class="grid-x" id="chatContainer">
+
+					<div class="cell medium-2 medium-cell-block-y" id="onlineUsers">
+            <h2><span class="numUsers">3 </span>Online Users</h2>
+					<ul id="users">
+						<li><span class="hash">&#64;</span>Jaquan</li>
+						<li><span class="hash">&#64;</span>LEEROY JEMKINS</li>
+						<li><span class="hash">&#64;</span>Shitmouth McGee</li>
+					</ul>
+          </div>
+
+
+
+          <div class="cell medium-10 medium-cell-block-y">
+
+						<div class="cell" id="chatHeader">
+			        <h2><span class="hash">&#35;</span> chatroom-1</h2>
+			      </div>
+
+      	  <ul id="messages"></ul>
+
+
+
+        </div>
+				<div class="cell" id="messageBox">
+			<form>
+				<input class="message" type="text" id="m" autocomplete="off">
+				<button><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+			</form>
+		</div>
+    </div>
+  </div>
+	<!--
+  <div class="cell shrink footer" id="messageBox">
+		<form>
+			<input class="message" type="text" id="m" autocomplete="off">
+			<button>send</button>
+		</form>
+  </div>-->
+
+
+<!--End of chat body-->
+
+
+
+
+
+
+
+
+
+	<script src="/socket.io/socket.io.js"></script>
   <script src="js/main.js"></script>
+	<script src="js/vendor/jquery.js"></script>
+	<script src="js/vendor/what-input.js"></script>
+	<script src="js/vendor/foundation.js"></script>
+	<script>
+		$(document).foundation();
+	</script>
 </body>
 </html>
