@@ -23,8 +23,8 @@ io.attach(server);
 var userCount = 0;
 
 io.on('connection', function(socket) {
-  //console.log('${socket.id} a user has connected');
 
+  //console.log('${socket.id} a user has connected');
   //io.emit('chat message', { for : 'everyone', message : `${socket.id} has joined!`}); //default message when someone joins
   userCount++;
   console.log(userCount);

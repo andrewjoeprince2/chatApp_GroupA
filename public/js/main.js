@@ -51,10 +51,7 @@
     nickName = (nickName && nickName.length > 0) ? nickName : 'user';
     msg = `<span class="handle" style="color:${userColor}">${nickName}</span>  ${chatMessage.value}`;
 
-    socket.emit('chat message', {
-      message: msg,
-      nickName: nickName
-    });
+    socket.emit('chat message', msg);
     chatMessage.value = "";
     return false;
   }
