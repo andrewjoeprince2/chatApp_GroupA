@@ -14,7 +14,7 @@ Please install ruby, if not already installed;
 
 Please clone the repository from GitHub:
 ```
-$ git clone https://github.com/andrewjoeprince2/chatApp_GroupA.git
+$ git clone https://github.com/andrewjoeprince2/prince_a_chatApp.git
 ```
 
 `$ cd chatApp_GroupA`
